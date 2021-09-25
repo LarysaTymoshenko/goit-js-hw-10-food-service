@@ -126,8 +126,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.refs = void 0;
 const refs = {
   cardList: document.querySelector('.js-menu'),
-  themeSwitcher: document.querySelector('.theme-switch'),
-  tumbler: document.querySelector('#theme-switch-toggle')
+  themeSwitch: document.querySelector('.theme-switch'),
+  checkBox: document.querySelector('#theme-switch-toggle')
 };
 exports.refs = refs;
 },{}],"js/menu.json":[function(require,module,exports) {
@@ -2378,18 +2378,31 @@ var _cards = _interopRequireDefault(require("../templates/cards.hbs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_menu.default);
-
-_menu.default.map(el => console.log(el));
-
-const createCardListMarkup = cards => {
+// console.log(cards);
+// cards.map(el=>console.log(el))
+const createCardList = cards => {
   return (0, _cards.default)(cards);
 };
 
-const cardListMarkup = createCardListMarkup(_menu.default);
+const cardListMarkup = createCardList(_menu.default);
 exports.cardListMarkup = cardListMarkup;
-},{"./menu.json":"js/menu.json","../templates/cards.hbs":"templates/cards.hbs"}],"js/theme-switcher.js":[function(require,module,exports) {
+},{"./menu.json":"js/menu.json","../templates/cards.hbs":"templates/cards.hbs"}],"js/theme.js":[function(require,module,exports) {
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DARK = exports.LIGHT = void 0;
+const theme = {
+  LIGHT: 'light-theme',
+  DARK: 'dark-theme'
+};
+const {
+  LIGHT,
+  DARK
+} = theme;
+exports.DARK = DARK;
+exports.LIGHT = LIGHT;
 },{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
@@ -2469,7 +2482,7 @@ var _refs = require("./js/refs.js");
 
 var _cards = require("./js/cards.js");
 
-var _themeSwitcher = require("./js/theme-switcher.js");
+var _theme = require("./js/theme.js");
 
 require("../src/css/styles.css");
 
@@ -2477,8 +2490,22 @@ require("../src/css/styles.css");
 _refs.refs.cardList.insertAdjacentHTML('beforeend', _cards.cardListMarkup); // turn off/on themes
 
 
-_refs.refs.themeSwitcher.addEventListener('change', _themeSwitcher.onChangeThemeClick);
-},{"./js/refs.js":"js/refs.js","./js/cards.js":"js/cards.js","./js/theme-switcher.js":"js/theme-switcher.js","../src/css/styles.css":"css/styles.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+_refs.refs.themeSwitch.addEventListener('change', changeTheme);
+
+let theme = localStorage.getItem('theme');
+
+function changeTheme(event) {
+  document.querySelector('body').classList.toggle(_theme.DARK);
+  document.querySelector('body').classList.toggle(_theme.LIGHT);
+  localStorage.setItem('theme', theme ? _theme.DARK : _theme.LIGHT);
+}
+
+if (!theme) {
+  theme = _theme.LIGHT;
+  localStorage.setItem('theme', theme);
+  document.querySelector('body').classList.add(_theme.LIGHT);
+} else _refs.refs.themeSwitch.checked = theme === _theme.LIGHT ? false : true;
+},{"./js/refs.js":"js/refs.js","./js/cards.js":"js/cards.js","./js/theme.js":"js/theme.js","../src/css/styles.css":"css/styles.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
