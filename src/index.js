@@ -1,12 +1,11 @@
 import { refs } from './js/refs.js'
 import { cardListMarkup } from './js/cards.js'
 import { onChangeThemeClick } from './js/theme-switcher.js'
-import './css/styles.css'
+import '../src/css/styles.css'
+
+// creat cart list
+refs.cardList.insertAdjacentHTML('beforeend', cardListMarkup);
 
 
-// СОЗДАЕМ КАРТОЧКИ МЕНЮ НА СТРАНИЦЕ
-refs.cardList.insertAdjacentHTML('beforeend', cardListMarkup) 
-
-
-// ПЕРЕКЛЮЧАЕМ ТЕМУ СТРАНИЦЫ
-refs.themeSwitcher.addEventListener('change', onChangeThemeClick)
+// turn off/on themes
+refs.themeSwitcher.addEventListener('change', onChangeThemeClick);
