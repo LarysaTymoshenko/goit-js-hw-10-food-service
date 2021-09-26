@@ -2490,21 +2490,22 @@ require("../src/css/styles.css");
 _refs.refs.cardList.insertAdjacentHTML('beforeend', _cards.cardListMarkup); // turn off/on themes
 
 
-_refs.refs.themeSwitch.addEventListener('change', changeTheme);
+let newTheme = localStorage.getItem('n-theme');
 
-let theme = localStorage.getItem('theme');
+if (!newTheme) {
+  newTheme = _theme.LIGHT;
+  localStorage.setItem('n-theme', _theme.LIGHT);
+} else document.querySelector('body').classList.add(newTheme);
 
-function changeTheme(event) {
+_refs.refs.checkBox.checked = newTheme === _theme.LIGHT ? false : true;
+
+_refs.refs.checkBox.addEventListener('change', changeTheme);
+
+function changeTheme(e) {
   document.querySelector('body').classList.toggle(_theme.DARK);
   document.querySelector('body').classList.toggle(_theme.LIGHT);
-  localStorage.setItem('theme', theme ? _theme.DARK : _theme.LIGHT);
+  localStorage.setItem('n-theme', e.target.checked ? _theme.DARK : _theme.LIGHT);
 }
-
-if (!theme) {
-  theme = _theme.LIGHT;
-  localStorage.setItem('theme', theme);
-  document.querySelector('body').classList.add(_theme.LIGHT);
-} else _refs.refs.themeSwitch.checked = theme === _theme.LIGHT ? false : true;
 },{"./js/refs.js":"js/refs.js","./js/cards.js":"js/cards.js","./js/theme.js":"js/theme.js","../src/css/styles.css":"css/styles.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2533,7 +2534,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64375" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54075" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

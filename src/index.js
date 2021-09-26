@@ -11,25 +11,29 @@ refs.cardList.insertAdjacentHTML('beforeend', cardListMarkup);
 
 // turn off/on themes
 
-refs.themeSwitch.addEventListener('change', changeTheme);
+let newTheme = localStorage.getItem('n-theme');
+ if (!newTheme) {
+    newTheme = LIGHT;
+    localStorage.setItem('n-theme', LIGHT);
+
+} else 
+    document.querySelector('body').classList.add(newTheme);
+ refs.checkBox.checked = newTheme === LIGHT ? false : true;
 
 
 
- let theme = localStorage.getItem('theme');
 
+refs.checkBox.addEventListener('change', changeTheme);
     
-function changeTheme(event) {
-  document.querySelector('body').classList.toggle(DARK);
-  document.querySelector('body').classList.toggle(LIGHT);
-  localStorage.setItem('theme', theme? DARK : LIGHT);
+function changeTheme(e) {
+    document.querySelector('body').classList.toggle(DARK);
+  
+    document.querySelector('body').classList.toggle(LIGHT);
+
+  localStorage.setItem('n-theme', e.target.checked? DARK :LIGHT);
 }
 
 
-if (!theme) {
-    theme = LIGHT;
-    localStorage.setItem('theme', theme);
-    document.querySelector('body').classList.add(LIGHT);
-}else refs.themeSwitch.checked = theme === LIGHT ? false : true;
 
 
 
